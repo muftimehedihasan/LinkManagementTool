@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Link extends Model
 {
-    protected $fillable = ['original_url', 'short_url', 'user_id'];
+    protected $fillable = ['user_id', 'original_url', 'shortened_url', 'custom_domain'];
 
 
     public function user()

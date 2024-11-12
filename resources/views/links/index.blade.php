@@ -1,26 +1,37 @@
 {{-- Display a list of all links for the authenticated user --}}
 
-<h1>Link Management Tool</h1>
+{{-- @extends('layouts.app') --}}
 
-@if(session('success'))
-    <p>{{ session('success') }}</p>
-@endif
+{{-- @section('content') --}}
+    <h1>Your Links</h1>
 
-<a href="{{ route('links.create') }}">Create a New Link</a>
+    <a href="{{ route('links.create') }}">Create New Link</a>
 
-<ul>
-    @foreach($links as $link)
-        <li>
-            <p>Original URL: {{ $link->original_url }}</p>
-            <p>Short URL: <a href="{{ url($link->short_url) }}">{{ url($link->short_url) }}</a></p>
-            <p>Clicks: {{ $link->click_count }}</p>
-            <a href="{{ route('links.edit', $link) }}">Edit</a>
-            <form action="{{ route('links.destroy', $link) }}" method="POST" style="display:inline;">
-                @csrf
-                @method('DELETE')
-                <button type="submit">Delete</button>
-            </form>
-        </li>
-    @endforeach
-</ul>
-
+    <table>
+        <thead>
+            <tr>
+                <th>Original URL</th>
+                <th>Shortened URL</th>
+                <th>Custom Domain</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($links as $link)
+                <tr>
+                    <td>{{ $link->original_url }}</td>
+                    <td>{{ url($link->shortened_url) }}</td>
+                    <td>{{ $link->custom_domain ?? 'None' }}</td>
+                    <td>
+                        <a href="{{ route('links.edit', $link) }}">Edit</a>
+                        <form action="{{ route('links.destroy', $link) }}" method="POST" style="display:inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+{{-- @endsection --}}
