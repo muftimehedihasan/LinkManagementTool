@@ -90,7 +90,6 @@ class LinkController extends Controller
     }
 
 
-
     // Redirect to the original URL
     public function redirect($short_url)
     {
